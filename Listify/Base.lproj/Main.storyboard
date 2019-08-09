@@ -32,7 +32,13 @@
                             <outlet property="delegate" destination="Qmm-yl-EcH" id="WKU-mz-LhE"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Listify" id="Gyu-27-m4M"/>
+                    <navigationItem key="navigationItem" title="Listify" id="Gyu-27-m4M">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="mAw-OA-11r">
+                            <connections>
+                                <action selector="AddItemButton:" destination="Qmm-yl-EcH" id="HJD-Oi-KoK"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Svf-4G-IIB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

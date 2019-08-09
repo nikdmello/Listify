@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3138F99C22FD7C14002B0CA5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3138F99B22FD7C14002B0CA5 /* AppDelegate.swift */; };
-		3138F99E22FD7C14002B0CA5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3138F99D22FD7C14002B0CA5 /* ViewController.swift */; };
+		3138F99E22FD7C14002B0CA5 /* TodoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3138F99D22FD7C14002B0CA5 /* TodoListViewController.swift */; };
 		3138F9A122FD7C14002B0CA5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3138F99F22FD7C14002B0CA5 /* Main.storyboard */; };
 		3138F9A322FD7C18002B0CA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3138F9A222FD7C18002B0CA5 /* Assets.xcassets */; };
 		3138F9A622FD7C18002B0CA5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3138F9A422FD7C18002B0CA5 /* LaunchScreen.storyboard */; };
@@ -17,7 +17,7 @@
 /* Begin PBXFileReference section */
 		3138F99822FD7C14002B0CA5 /* Listify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Listify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3138F99B22FD7C14002B0CA5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3138F99D22FD7C14002B0CA5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		3138F99D22FD7C14002B0CA5 /* TodoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListViewController.swift; sourceTree = "<group>"; };
 		3138F9A022FD7C14002B0CA5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3138F9A222FD7C18002B0CA5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3138F9A522FD7C18002B0CA5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -55,7 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				3138F99B22FD7C14002B0CA5 /* AppDelegate.swift */,
-				3138F99D22FD7C14002B0CA5 /* ViewController.swift */,
+				3138F99D22FD7C14002B0CA5 /* TodoListViewController.swift */,
 				3138F99F22FD7C14002B0CA5 /* Main.storyboard */,
 				3138F9A222FD7C18002B0CA5 /* Assets.xcassets */,
 				3138F9A422FD7C18002B0CA5 /* LaunchScreen.storyboard */,
@@ -135,7 +135,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3138F99E22FD7C14002B0CA5 /* ViewController.swift in Sources */,
+				3138F99E22FD7C14002B0CA5 /* TodoListViewController.swift in Sources */,
 				3138F99C22FD7C14002B0CA5 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -285,6 +285,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7R6Z67X5UU;
 				INFOPLIST_FILE = Listify/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -292,7 +293,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nikdmello.Listify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -303,6 +304,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7R6Z67X5UU;
 				INFOPLIST_FILE = Listify/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -310,7 +312,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nikdmello.Listify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

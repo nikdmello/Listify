@@ -10,6 +10,9 @@ import UIKit
 
 class TodoListViewController: UITableViewController {
 
+    // Provides interface to file system
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Tasks.plist")
+    
     // Represents an array of Task objects
     var taskArray = [Task]()
     
@@ -20,17 +23,16 @@ class TodoListViewController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        let task1 = Task()
-        task1.title = "walk fudge"
-        taskArray.append(task1)
+//        let task1 = Task()
+//        task1.title = "walk fudge"
+//        taskArray.append(task1)
+
         
-        let task2 = Task()
-        task2.title = "eat lunch"
-        taskArray.append(task2)
+//        if let tasks = defaults.array(forKey: "ListArrays") as? [Task] {
+//            taskArray = tasks
+//        }
         
-        if let tasks = defaults.object(forKey: "ListArrays") as? [Task] {
-            taskArray = tasks
-        }
+        loadTaskData()
     }
     
     //MARK - TableView DataSource Methods
@@ -64,6 +66,9 @@ class TodoListViewController: UITableViewController {
         // Updates whether or not the Task object is completed as part of the checkmark functionality
         taskArray[indexPath.row].completed = !taskArray[indexPath.row].completed
         
+        // Encodes the updated completed variable in the plist
+        saveTask()
+        
         // TableView calls its datasource methods again
         tableView.reloadData()
  
@@ -71,7 +76,7 @@ class TodoListViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    //MARK - Add Item Button
+    //MARK - Add Task Button
     @IBAction func AddItemButton(_ sender: UIBarButtonItem) {
         
         // A textfield to be displayed in the UIAlertController
@@ -87,7 +92,9 @@ class TodoListViewController: UITableViewController {
             newTask.title = textField.text!
             
             self.taskArray.append(newTask)
-            self.defaults.set(self.taskArray, forKey: "ListArrays")
+            
+            self.saveTask()
+            
             self.tableView.reloadData()
         }
         
@@ -101,6 +108,33 @@ class TodoListViewController: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    //MARK - Model Manipulation Methods
+    // Writes data to dataFilePath by encoding data
+    func saveTask() {
+        
+        // Encodes data into an array of Tasks (custom objects/dictionaries) in dataFilePath
+        let encoder = PropertyListEncoder()
+        do {
+            let data = try encoder.encode(taskArray)
+            try data.write(to: dataFilePath!)
+        }
+        catch {
+            print("Error encoding task array")
+        }
+    }
+    
+    // Reads data from dataFilePath by decoding data in plist
+    func loadTaskData() {
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            let decoder = PropertyListDecoder()
+            do {
+                taskArray = try decoder.decode([Task].self, from: data)
+            }
+            catch {
+                print("Error decoding task array")
+            }
+        }
+    }
 
 }
 

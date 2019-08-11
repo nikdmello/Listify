@@ -8,7 +8,8 @@
 
 import Foundation
 
-class Task {
+// Conforms to codable protocol in order to encode/decode Tasks
+class Task: Codable {
     var title : String = ""
     var completed : Bool = false
 }

@@ -26,7 +26,7 @@
                             </connections>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ItemCell" id="TAy-Ql-feQ">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TaskCell" id="TAy-Ql-feQ">
                                 <rect key="frame" x="0.0" y="72" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TAy-Ql-feQ" id="F11-VG-pSc">
@@ -44,7 +44,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="mAw-OA-11r">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <action selector="AddItemButton:" destination="Qmm-yl-EcH" id="HJD-Oi-KoK"/>
+                                <action selector="AddTaskButton:" destination="Qmm-yl-EcH" id="o5E-8X-RU3"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -103,7 +103,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="ikx-YG-2gP">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <action selector="addCategory:" destination="8fp-A1-kWz" id="XW1-0t-pLX"/>
+                                <action selector="addCategory:" destination="8fp-A1-kWz" id="PiX-Dn-8Nv"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

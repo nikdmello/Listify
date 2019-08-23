@@ -3,21 +3,22 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		310B82DF230077F5006A654A /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 310B82DD230077F5006A654A /* DataModel.xcdatamodeld */; };
 		3138F99C22FD7C14002B0CA5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3138F99B22FD7C14002B0CA5 /* AppDelegate.swift */; };
 		3138F99E22FD7C14002B0CA5 /* TodoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3138F99D22FD7C14002B0CA5 /* TodoListViewController.swift */; };
 		3138F9A122FD7C14002B0CA5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3138F99F22FD7C14002B0CA5 /* Main.storyboard */; };
 		3138F9A322FD7C18002B0CA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3138F9A222FD7C18002B0CA5 /* Assets.xcassets */; };
 		3138F9A622FD7C18002B0CA5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3138F9A422FD7C18002B0CA5 /* LaunchScreen.storyboard */; };
 		3188BFD22307E5B7004089A2 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3188BFD12307E5B7004089A2 /* CategoryViewController.swift */; };
+		3188BFD62309F6A5004089A2 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3188BFD52309F6A5004089A2 /* Task.swift */; };
+		3188BFDA2309F6B8004089A2 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3188BFD92309F6B8004089A2 /* Category.swift */; };
+		D1347AB04B753A97EE97A1AC /* Pods_Listify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A82E13EFD5A2D273F56237E0 /* Pods_Listify.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		310B82DE230077F5006A654A /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		3138F99822FD7C14002B0CA5 /* Listify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Listify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3138F99B22FD7C14002B0CA5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3138F99D22FD7C14002B0CA5 /* TodoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListViewController.swift; sourceTree = "<group>"; };
@@ -26,6 +27,11 @@
 		3138F9A522FD7C18002B0CA5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3138F9A722FD7C18002B0CA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = ../../Info.plist; sourceTree = "<group>"; };
 		3188BFD12307E5B7004089A2 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
+		3188BFD52309F6A5004089A2 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		3188BFD92309F6B8004089A2 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		A82E13EFD5A2D273F56237E0 /* Pods_Listify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Listify.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C061E9FF18CFC35023617FA2 /* Pods-Listify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Listify.debug.xcconfig"; path = "Target Support Files/Pods-Listify/Pods-Listify.debug.xcconfig"; sourceTree = "<group>"; };
+		D344F6C5598A53B907DE7189 /* Pods-Listify.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Listify.release.xcconfig"; path = "Target Support Files/Pods-Listify/Pods-Listify.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,16 +39,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1347AB04B753A97EE97A1AC /* Pods_Listify.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		027937EEB19F08CC9ACB4C07 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C061E9FF18CFC35023617FA2 /* Pods-Listify.debug.xcconfig */,
+				D344F6C5598A53B907DE7189 /* Pods-Listify.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		310B82D322FE3AFF006A654A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				310B82DD230077F5006A654A /* DataModel.xcdatamodeld */,
+				3188BFD52309F6A5004089A2 /* Task.swift */,
+				3188BFD92309F6B8004089A2 /* Category.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -80,6 +97,8 @@
 			children = (
 				3138F99A22FD7C14002B0CA5 /* Listify */,
 				3138F99922FD7C14002B0CA5 /* Products */,
+				027937EEB19F08CC9ACB4C07 /* Pods */,
+				F1985514B806DF24166E2B06 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -102,6 +121,14 @@
 			path = Listify;
 			sourceTree = "<group>";
 		};
+		F1985514B806DF24166E2B06 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A82E13EFD5A2D273F56237E0 /* Pods_Listify.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -109,9 +136,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3138F9AA22FD7C18002B0CA5 /* Build configuration list for PBXNativeTarget "Listify" */;
 			buildPhases = (
+				C90476343D79CD42DC0C0153 /* [CP] Check Pods Manifest.lock */,
 				3138F99422FD7C14002B0CA5 /* Sources */,
 				3138F99522FD7C14002B0CA5 /* Frameworks */,
 				3138F99622FD7C14002B0CA5 /* Resources */,
+				F978E9C7DAA8FBF4C81201DE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -168,6 +197,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		C90476343D79CD42DC0C0153 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Listify-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F978E9C7DAA8FBF4C81201DE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Listify/Pods-Listify-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Listify/Pods-Listify-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Listify/Pods-Listify-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3138F99422FD7C14002B0CA5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -175,8 +246,9 @@
 			files = (
 				3188BFD22307E5B7004089A2 /* CategoryViewController.swift in Sources */,
 				3138F99E22FD7C14002B0CA5 /* TodoListViewController.swift in Sources */,
-				310B82DF230077F5006A654A /* DataModel.xcdatamodeld in Sources */,
+				3188BFD62309F6A5004089A2 /* Task.swift in Sources */,
 				3138F99C22FD7C14002B0CA5 /* AppDelegate.swift in Sources */,
+				3188BFDA2309F6B8004089A2 /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,6 +392,7 @@
 		};
 		3138F9AB22FD7C18002B0CA5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C061E9FF18CFC35023617FA2 /* Pods-Listify.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -339,6 +412,7 @@
 		};
 		3138F9AC22FD7C18002B0CA5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D344F6C5598A53B907DE7189 /* Pods-Listify.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -378,19 +452,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		310B82DD230077F5006A654A /* DataModel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				310B82DE230077F5006A654A /* DataModel.xcdatamodel */,
-			);
-			currentVersion = 310B82DE230077F5006A654A /* DataModel.xcdatamodel */;
-			path = DataModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 3138F99022FD7C14002B0CA5 /* Project object */;
 }

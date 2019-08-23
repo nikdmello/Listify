@@ -7,55 +7,39 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    
+    let categoryVC = CategoryViewController()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
+        
+        // Initializes Realm to catch errors
+        do {
+            _ = try Realm()
+        }
+        catch {
+            print("Fail to initalize Realm, \(error)")
+        }
         return true
     }
-
-    func applicationWillTerminate(_ application: UIApplication) {
-       
-        self.saveContext()
-    }
     
-    // MARK: - Core Data stack
-    
-    lazy var persistentContainer: NSPersistentContainer = {
-        
-        // SQLite database
-        let container = NSPersistentContainer(name: "DataModel")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-              
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
-        return container
-    }()
-    
-    // MARK: - Core Data Saving support
-    
-    func saveContext () {
-        // Context is the area where you can change and update your data until ready to be committed to permanent storage
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        if shortcutItem.type == "com.nikdmello.Listify" {
+            let vc = UIStoryboard(name: "Main", bundle: nil)
+            vc.instantiateInitialViewController()
+            
+            
+//            let cat = CategoryViewController()
+//            cat.addCategory()
         }
     }
 
-
+    
 }
 

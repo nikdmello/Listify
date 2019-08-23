@@ -7,15 +7,15 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class TodoListViewController: UITableViewController {
     
-    // Reference to the context for the persistent container
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    // Instantiates a Realm database
+    let realm = try! Realm()
     
-    // Represents an array of Task objects
-    var taskArray = [Task]()
+    // Represents a collecton of Results of Tasks
+    var taskResults: Results<Task>?
     
     // Updates when category is selected and loads tasks of that parent category
     var selectedCategory : Category? {
@@ -28,114 +28,118 @@ class TodoListViewController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
     }
     
     //MARK: - TableView DataSource Methods
     
-    // Tells the data source to return the number of rows in a given section of a table view.
+    // Returns number of Task objects as number of rows.
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return taskArray.count
+        // Returns one row if there are no Task objects
+        return taskResults?.count ?? 1
     }
     
-    // Asks the data source for a cell to insert in a particular location of the table view.
+    // Inserts Task cell in a particular location of the table view.
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // Returns a reusable table-view cell object for the specified reuse identifier and adds it to the table.
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath)
         
-        let task = taskArray[indexPath.row]
-        
-        cell.textLabel?.text = task.title
-        
-        // Updates accessory type to display a checkmark
-        cell.accessoryType = task.completed ? .checkmark : .none
-
+        // Updates cell properties to those of the specified Task
+        if let task = taskResults?[indexPath.row] {
+            cell.textLabel?.text = task.title
+            // Updates accessory type to display a checkmark
+            cell.accessoryType = task.completed ? .checkmark : .none
+            cell.tintColor = UIColor.blue
+        }
+        else {
+            // Inserts default text label if no Task objects
+            cell.textLabel?.text = "Add new Task"
+        }
         return cell
     }
     
     //MARK: - TableView Delegate Methods
     
-    // Tells the delegate that the specified row is now selected.
+    // Notifies delegate that the specified row is now selected.
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        // Generates haptic feedback for improved UX
+        let feedback = UIImpactFeedbackGenerator(style: .medium)
+        feedback.impactOccurred()
 
         // Updates whether or not the Task object is completed as part of the checkmark functionality
-        taskArray[indexPath.row].completed = !taskArray[indexPath.row].completed
+        if let task = taskResults?[indexPath.row] {
+            do {
+                try realm.write {
+                    task.completed = !task.completed
+                }
+            }
+            catch {
+                print("Error updating task, \(error)")
+            }
+        }
         
-        saveTask()
- 
+        tableView.reloadData()
+        
         // Provides a smooth animation for deselecting a row
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
     //MARK: - Add Task Button
-    @IBAction func AddItemButton(_ sender: UIBarButtonItem) {
+    @IBAction func AddTaskButton(_ sender: UIBarButtonItem) {
         
-        // A textfield to be displayed in the UIAlertController
+        // Receives text from alert controller's text field
         var textField = UITextField()
-        
+
         // An object that displays an alert message to the user.
         let alert = UIAlertController(title: "Add New Task", message: "", preferredStyle: .alert)
-        
+
+        // An action that cancels the alert.
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
         // An action that can be taken when the user taps a button in an alert.
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
             
-            let newTask = Task(context: self.context)
-            newTask.title = textField.text!
-            newTask.completed = false
-            newTask.parentCategory = self.selectedCategory
-            
-            self.taskArray.append(newTask)
-            
-            self.saveTask()
-            
+            // Adds new Task to realm
+            if let currentCategory = self.selectedCategory {
+                do {
+                    try self.realm.write {
+                        // Instantiates new Task
+                        let newTask = Task()
+                        newTask.title = textField.text!
+                        newTask.dateCreated = Date()
+                        // Appends new Task to the List<Task> of currentCategory
+                        currentCategory.tasks.append(newTask)
+                }
+            }
+                catch {
+                    print("Error writing task, \(error)")
+                }
+            }
+            self.tableView.reloadData()
         }
-        
+
+        // Displays text field in UIAlertController
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Enter task"
             textField = alertTextField
          }
         
+        // Adds actions to alert
         alert.addAction(action)
-        
+        alert.addAction(cancelAction)
+
+        // Animates alert
         present(alert, animated: true, completion: nil)
     }
     
     //MARK: - Model Manipulation Methods
-    // Saves Tasks using Core Data
-    func saveTask() {
-
-        do {
-            try context.save()
-        }
-        catch {
-            print("Error saving context, \(error)")
-        }
-        self.tableView.reloadData()
-    }
     
-    // Retrieves Tasks array from persistent store with specified fetch request
-    // Default value retrieves the entire Task array
-    func loadTaskData(with request: NSFetchRequest<Task> = Task.fetchRequest(), predicate: NSPredicate? =  nil) {
+    // Retrieves alphabetically sorted List<Task> from selectedCategory from realm
+    func loadTaskData() {
         
-        // Filters the tasks under the appropriate parent category
-        let categoryPredicate = NSPredicate(format: "parentCategory.categoryTitle MATCHES %@", selectedCategory!.categoryTitle!)
-        
-        // Optional binding to ensure that only the category predicate is applied if the title predicate is nil
-        if let titleContainsPredicate = predicate {
-            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, titleContainsPredicate])
-        }
-        else {
-            request.predicate = categoryPredicate
-        }
-        
-        // Updates task array with the data from the fetch request
-        do {
-            taskArray = try context.fetch(request)
-        }
-        catch {
-            print("Error fetching data")
-        }
+        taskResults = selectedCategory?.tasks.sorted(byKeyPath: "title", ascending: true)
+
         tableView.reloadData()
     }
 
@@ -143,34 +147,29 @@ class TodoListViewController: UITableViewController {
 
 //MARK: - SearchBar Methods
 extension TodoListViewController: UISearchBarDelegate {
-    
+
+    // Notifies delegate that the search button was clicked
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
-        // Creates request to read from context
-        let request : NSFetchRequest<Task> = Task.fetchRequest()
-        
-        // Uses a 'title contains' predicate to narrow request
-        let titlePredicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
-        
-        // Uses sortDescriptors for alphabetical ordering
-        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-        
-        loadTaskData(with: request, predicate: titlePredicate)
-        
+
+        // Filters taskResults with predicate such that Task title contains the search bar text field
+        // Sorts results by date of creation
+        taskResults = taskResults?.filter("title CONTAINS[cd] %a", searchBar.text!).sorted(byKeyPath: "dateCreated", ascending: true)
+
+        tableView.reloadData()
     }
-    
+
+
+    // Notifies delegate that search bar text is updated
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        // Retrieves Task array without any search criteria
+
+        // Retrieves all taskResults
         if searchBar.text!.isEmpty {
             loadTaskData()
             // Resigns search bar on the main thread
             DispatchQueue.main.async {
                 searchBar.resignFirstResponder()
             }
-            
+
         }
     }
-    
 }
-

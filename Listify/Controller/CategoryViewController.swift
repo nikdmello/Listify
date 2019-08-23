@@ -7,17 +7,18 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class CategoryViewController: UITableViewController {
     
-    // Array of Categories
-    var categoryArray = [Category]()
     
-    // Reference to the context for the persistent container 
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    // Instantiates Realm database
+    let realm = try! Realm()
     
-
+    // Results container of Category objects
+    var categoryResults: Results<Category>?
+    
+    // Loads all Category objects upon launch
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,7 +29,7 @@ class CategoryViewController: UITableViewController {
     //MARK: - Add Category Button
     @IBAction func addCategory(_ sender: UIBarButtonItem) {
         
-        // A textfield to be displayed in the UIAlertController
+        // Receives text from alert controller's text field
         var textField = UITextField()
         
         // An object that displays an alert message to the user.
@@ -40,15 +41,15 @@ class CategoryViewController: UITableViewController {
         // An action that can be taken when the user taps a button in an alert.
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
             
-            let newCategory = Category(context: self.context)
+            // Instantiates new Category
+            let newCategory = Category()
             newCategory.categoryTitle = textField.text!
             
-            self.categoryArray.append(newCategory)
-            
-            self.saveCategory()
+            self.save(category: newCategory)
             
         }
-        
+                
+        // Displays text field in UIAlertController
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Enter category name"
             textField = alertTextField
@@ -63,62 +64,69 @@ class CategoryViewController: UITableViewController {
     
     //MARK: - TableView Datasource Methods
     
+    // Returns number of Category objects as number of rows.
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categoryArray.count
+        // Returns 1 cell if optional is nil
+        return categoryResults?.count ?? 1
     }
     
+    // Inserts Category cell in a particular location of the table view.
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // Creates a reusable cell to be added to the table at the index path
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
         
-        let category = categoryArray[indexPath.row]
+        // Reference to Category at a certain index path
+        let category = categoryResults?[indexPath.row]
         
-        cell.textLabel?.text = category.categoryTitle
+        // Updates cell text to that of the Category title
+        // If no Category objects, updates singular cell with default title
+        cell.textLabel?.text = category?.categoryTitle ?? "Add a New Category"
         
         return cell
         
     }
     
     //MARK: - TableView Delegate Methods
+    // Notifies delegate that the specified row is now selected.
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Performs segue to the TodoListViewController
         performSegue(withIdentifier: "goToTaskList", sender: self)
     }
     
+    // Sets data on the destination view controller
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Instantiates destination view controller
         let destinationVC = segue.destination as! TodoListViewController
         
+        // Updates selectedCategory to display the respective tasks of the selected category
         if let indexPath = tableView.indexPathForSelectedRow {
-            destinationVC.selectedCategory = categoryArray[indexPath.row]
+            destinationVC.selectedCategory = categoryResults?[indexPath.row]
         }
     }
     
     
-    
     //MARK: - Data Manipulation Methods
-    // Saves Tasks using Core Data
-    func saveCategory() {
+    // Saves Category
+    func save(category: Category) {
         
         do {
-            try context.save()
+            // Enables to commit changes to realm within write transaction
+            try realm.write {
+                realm.add(category)
+            }
         }
         catch {
-            print("Error saving context, \(error)")
+            print("Error saving category, \(error)")
         }
         self.tableView.reloadData()
     }
     
-    // Retrieves Tasks array from persistent store with specified fetch request
-    // Default value retrieves the entire Category array
-    func loadCategoryData(with request : NSFetchRequest<Category> = Category.fetchRequest()) {
+    // Fetches all Category objects from realm by specifying Category data type
+     func loadCategoryData() {
         
-        do {
-            // Updates category array with the data from the fetch request
-            categoryArray = try context.fetch(request)
-        }
-        catch {
-            print("Error fetching category data")
-        }
+        categoryResults = realm.objects(Category.self)
+        
         tableView.reloadData()
     }
     

@@ -13,6 +13,7 @@ import RealmSwift
 class Category: Object {
     // Dynamic var - can monitor changes in property during runtime
     @objc dynamic var categoryTitle : String = ""
+    @objc dynamic var color : String = ""
     // Defines the one-to-many relationship between Category and Tasks
     let tasks = List<Task>()
     

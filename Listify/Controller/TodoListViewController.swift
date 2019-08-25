@@ -8,8 +8,9 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
-class TodoListViewController: UITableViewController {
+class TodoListViewController: SwipeTableViewController {
     
     // Instantiates a Realm database
     let realm = try! Realm()
@@ -41,20 +42,27 @@ class TodoListViewController: UITableViewController {
     // Inserts Task cell in a particular location of the table view.
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        // Returns a reusable table-view cell object for the specified reuse identifier and adds it to the table.
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath)
+        // Reference to Cell created in superclass at current indexPath
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         // Updates cell properties to those of the specified Task
         if let task = taskResults?[indexPath.row] {
             cell.textLabel?.text = task.title
+            
+            // Updates cell color to that of its parent Category and creates a gradient
+            if let color = UIColor(hexString: selectedCategory!.color)?.darken(byPercentage: CGFloat(indexPath.row) / CGFloat(taskResults!.count)) {
+                cell.backgroundColor = color
+                cell.textLabel?.textColor = ContrastColorOf(color, returnFlat: true)
+                cell.tintColor = ContrastColorOf(color, returnFlat: true)
+            }
             // Updates accessory type to display a checkmark
             cell.accessoryType = task.completed ? .checkmark : .none
-            cell.tintColor = UIColor.blue
         }
         else {
             // Inserts default text label if no Task objects
             cell.textLabel?.text = "Add new Task"
         }
+        // Returns cell in tableview
         return cell
     }
     
@@ -78,7 +86,6 @@ class TodoListViewController: UITableViewController {
                 print("Error updating task, \(error)")
             }
         }
-        
         tableView.reloadData()
         
         // Provides a smooth animation for deselecting a row
@@ -141,6 +148,20 @@ class TodoListViewController: UITableViewController {
         taskResults = selectedCategory?.tasks.sorted(byKeyPath: "title", ascending: true)
 
         tableView.reloadData()
+    }
+    
+    // Deletes Task data
+    override func updateModel(at indexPath: IndexPath) {
+        if let task = self.taskResults?[indexPath.row] {
+            do {
+                try self.realm.write {
+                    self.realm.delete(task)
+                }
+            }
+            catch {
+                print("Error deleting task, \(error)")
+            }
+        }
     }
 
 }

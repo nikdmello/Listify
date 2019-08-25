@@ -15,6 +15,7 @@
 		3188BFD22307E5B7004089A2 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3188BFD12307E5B7004089A2 /* CategoryViewController.swift */; };
 		3188BFD62309F6A5004089A2 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3188BFD52309F6A5004089A2 /* Task.swift */; };
 		3188BFDA2309F6B8004089A2 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3188BFD92309F6B8004089A2 /* Category.swift */; };
+		3188BFDC23117514004089A2 /* SwipeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3188BFDB23117514004089A2 /* SwipeTableViewController.swift */; };
 		D1347AB04B753A97EE97A1AC /* Pods_Listify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A82E13EFD5A2D273F56237E0 /* Pods_Listify.framework */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,7 @@
 		3188BFD12307E5B7004089A2 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		3188BFD52309F6A5004089A2 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		3188BFD92309F6B8004089A2 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		3188BFDB23117514004089A2 /* SwipeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeTableViewController.swift; sourceTree = "<group>"; };
 		A82E13EFD5A2D273F56237E0 /* Pods_Listify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Listify.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C061E9FF18CFC35023617FA2 /* Pods-Listify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Listify.debug.xcconfig"; path = "Target Support Files/Pods-Listify/Pods-Listify.debug.xcconfig"; sourceTree = "<group>"; };
 		D344F6C5598A53B907DE7189 /* Pods-Listify.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Listify.release.xcconfig"; path = "Target Support Files/Pods-Listify/Pods-Listify.release.xcconfig"; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 				3138F99B22FD7C14002B0CA5 /* AppDelegate.swift */,
 				3188BFD12307E5B7004089A2 /* CategoryViewController.swift */,
 				3138F99D22FD7C14002B0CA5 /* TodoListViewController.swift */,
+				3188BFDB23117514004089A2 /* SwipeTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 				3138F99E22FD7C14002B0CA5 /* TodoListViewController.swift in Sources */,
 				3188BFD62309F6A5004089A2 /* Task.swift in Sources */,
 				3138F99C22FD7C14002B0CA5 /* AppDelegate.swift in Sources */,
+				3188BFDC23117514004089A2 /* SwipeTableViewController.swift in Sources */,
 				3188BFDA2309F6B8004089A2 /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

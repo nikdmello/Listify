@@ -54,6 +54,9 @@ class CategoryViewController: SwipeTableViewController {
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Enter category name"
             textField = alertTextField
+            textField.spellCheckingType = .yes
+            textField.autocorrectionType = .yes
+            textField.autocapitalizationType = .sentences
         }
         
         alert.addAction(action)
@@ -78,13 +81,19 @@ class CategoryViewController: SwipeTableViewController {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         // Reference to Category at a certain index path
-        let category = categoryResults?[indexPath.row]
+        if let category = categoryResults?[indexPath.row] {
+            
+            // Updates cell text to that of the Category title
+            cell.textLabel?.text = category.categoryTitle
         
-        // Updates cell text to that of the Category title
-        // If no Category objects, updates singular cell with default title
-        cell.textLabel?.text = category?.categoryTitle ?? "Add a New Category"
-        
-        cell.backgroundColor = UIColor(hexString: category!.color)
+            guard let cellColor = UIColor(hexString: category.color) else {
+                fatalError()
+            }
+            
+            cell.backgroundColor = cellColor
+            cell.textLabel?.textColor = ContrastColorOf(cellColor, returnFlat: true)
+            
+        }
         
         // Returns cell in tableview
         return cell

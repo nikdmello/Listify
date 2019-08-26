@@ -12,6 +12,10 @@ import ChameleonFramework
 
 class TodoListViewController: SwipeTableViewController {
     
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    var bgColorHexCode: String = "FF5E4E"
+    
     // Instantiates a Realm database
     let realm = try! Realm()
     
@@ -29,6 +33,49 @@ class TodoListViewController: SwipeTableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        // UI changes to search bar
+        searchBar.barStyle = .blackTranslucent
+        let searchTextField = searchBar.value(forKey: "searchField") as! UITextField
+        searchTextField.textColor = FlatWhite()
+//        let magnifyingGlassIcon = searchTextField.leftView as! UIImageView
+//        magnifyingGlassIcon.tintColor = FlatWhite()
+
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        // Changes navigation title to that of the Category
+        title = selectedCategory?.categoryTitle
+        
+        guard let colorHex = selectedCategory?.color else {
+            fatalError()
+        }
+        
+        updateNavBar(withHexCode: colorHex)
+        }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        // Updates nav bar color to the default background color
+        updateNavBar(withHexCode: bgColorHexCode)
+    }
+    
+    //MARK: - Navigation Bar Setup
+    // Updates navigation bar color properties with the given hex code
+    func updateNavBar(withHexCode hexCode: String) {
+        
+        guard let navBar = navigationController?.navigationBar else {
+            fatalError("Nav bar does not exist.")
+        }
+        
+        guard let navBarColor = UIColor(hexString: hexCode) else {
+            fatalError()
+        }
+        
+        navBar.tintColor = ContrastColorOf(navBarColor, returnFlat: true)
+        navBar.barTintColor = navBarColor
+        searchBar.barTintColor = navBarColor
+        navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : ContrastColorOf(navBarColor, returnFlat: true)]
     }
     
     //MARK: - TableView DataSource Methods
@@ -72,7 +119,7 @@ class TodoListViewController: SwipeTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // Generates haptic feedback for improved UX
-        let feedback = UIImpactFeedbackGenerator(style: .medium)
+        let feedback = UIImpactFeedbackGenerator(style: .light)
         feedback.impactOccurred()
 
         // Updates whether or not the Task object is completed as part of the checkmark functionality
@@ -130,6 +177,9 @@ class TodoListViewController: SwipeTableViewController {
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Enter task"
             textField = alertTextField
+            textField.spellCheckingType = .yes
+            textField.autocorrectionType = .yes
+            textField.autocapitalizationType = .sentences
          }
         
         // Adds actions to alert

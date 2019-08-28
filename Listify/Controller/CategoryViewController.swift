@@ -22,8 +22,10 @@ class CategoryViewController: SwipeTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Registers VC to participate with 3D Touch preview (peek) and commit (pop).
+        registerForPreviewing(with: self, sourceView: tableView)
+
         loadCategoryData()
-        
     }
 
     //MARK: - Add Category Button
@@ -155,5 +157,31 @@ class CategoryViewController: SwipeTableViewController {
                 print("Error deleting category, \(error)")
             }
         }
+    }
+}
+
+// Handles 3D Touch peek and pop actions.
+extension CategoryViewController: UIViewControllerPreviewingDelegate {
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        
+        if let indexPath = tableView.indexPathForRow(at: location), let cell = tableView.cellForRow(at: indexPath) {
+            previewingContext.sourceRect = tableView.convert(cell.frame, to: self.tableView)
+            
+            guard let detailViewController = storyboard?.instantiateViewController(withIdentifier: "todoList") as? TodoListViewController else {
+                return nil
+            }
+            
+            if let category = categoryResults?[indexPath.row] {
+                detailViewController.selectedCategory = category
+            }
+            
+            return detailViewController
+        }
+        return nil
+    }
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        self.navigationController?.pushViewController(viewControllerToCommit, animated: true)
     }
 }

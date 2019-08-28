@@ -25,7 +25,8 @@ import RealmSwift
         }
         catch {
             print("Fail to initalize Realm, \(error)")
-        }
+        }    
+        
         return true
     }
     

@@ -12,6 +12,7 @@ import ChameleonFramework
 
 class TodoListViewController: SwipeTableViewController {
     
+    
     @IBOutlet weak var searchBar: UISearchBar!
     
     var bgColorHexCode: String = "FF5E4E"
@@ -32,6 +33,9 @@ class TodoListViewController: SwipeTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+       // registerForPreviewing(with: self, sourceView: CategoryViewController().view)
+        
         
         // UI changes to search bar
         searchBar.barStyle = .blackTranslucent
@@ -65,7 +69,7 @@ class TodoListViewController: SwipeTableViewController {
     func updateNavBar(withHexCode hexCode: String) {
         
         guard let navBar = navigationController?.navigationBar else {
-            fatalError("Nav bar does not exist.")
+            return
         }
         
         guard let navBarColor = UIColor(hexString: hexCode) else {

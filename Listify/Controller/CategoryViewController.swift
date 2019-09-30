@@ -46,7 +46,7 @@ class CategoryViewController: SwipeTableViewController {
             // Instantiates new Category
             let newCategory = Category()
             newCategory.categoryTitle = textField.text!
-            newCategory.color = UIColor.randomFlat.hexValue()
+            newCategory.color = UIColor.randomFlat().hexValue()
             
             self.save(category: newCategory)
             
@@ -94,6 +94,7 @@ class CategoryViewController: SwipeTableViewController {
             
             cell.backgroundColor = cellColor
             cell.textLabel?.textColor = ContrastColorOf(cellColor, returnFlat: true)
+            cell.textLabel?.font = UIFont.systemFont(ofSize: 19)
             
         }
         

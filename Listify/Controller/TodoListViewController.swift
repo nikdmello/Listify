@@ -12,7 +12,6 @@ import ChameleonFramework
 
 class TodoListViewController: SwipeTableViewController {
     
-    
     @IBOutlet weak var searchBar: UISearchBar!
     
     var bgColorHexCode: String = "FF5E4E"
@@ -95,6 +94,8 @@ class TodoListViewController: SwipeTableViewController {
         
         // Reference to Cell created in superclass at current indexPath
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 19)
         
         // Updates cell properties to those of the specified Task
         if let task = taskResults?[indexPath.row] {
@@ -192,6 +193,25 @@ class TodoListViewController: SwipeTableViewController {
 
         // Animates alert
         present(alert, animated: true, completion: nil)
+    }
+    
+    //MARK: - Filter Button
+    var buttonTapped = true
+
+    // Filters the tasks according to whether or not they have been completed
+    @IBAction func filterButton(_ sender: UIBarButtonItem) {
+        
+        if buttonTapped == true {
+            taskResults = taskResults?.filter("completed == %a", false)
+            buttonTapped = false
+        }
+        else {
+            taskResults = selectedCategory?.tasks.sorted(byKeyPath: "title", ascending: true)
+            buttonTapped = true
+        }
+        
+        tableView.reloadData()
+        
     }
     
     //MARK: - Model Manipulation Methods
